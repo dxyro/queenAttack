@@ -3,8 +3,8 @@ import os
 def main():
     def readText():
         try:
-            if os.stat('archivo.txt').st_atime > 0:
-                archivo = open('archivo.txt', 'r')
+            if os.stat("archivo.txt").st_atime > 0:
+                archivo = open("archivo.txt", 'r')
                 listLines = archivo.readlines()
                 archivo.close()
                 fulfill = cumple(listLines)
