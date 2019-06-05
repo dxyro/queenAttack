@@ -36,7 +36,7 @@ def main():
                                 mensaje_error = 'La cantidad de obstaculos no concuerda'
                                 cumple = False
                                 break
-                        if matrizT < int(line[0]) or matrizT < int(line[1]):
+                        elif matrizT < int(line[0]) or matrizT < int(line[1]):
                             mensaje_error = 'La posicion '+line[0]+', '+line[1]+' no se encuentra dentro de la matriz'
                             cumple = False
                             break
