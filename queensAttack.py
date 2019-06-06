@@ -49,7 +49,6 @@ def validators(list_lines):
     else:
         validator = False
         error_message = 'You must enter more data'
-
     return {'validators': validator, 'error_message': error_message, 'list': list_validator}
 
 
@@ -101,50 +100,26 @@ def solve(len_m, queen_p, board):
 
 
 def find_way(board, len_m, x, y):
-    rx = lx = srx = slx = irx = ilx = x
-    ry = ly = sry = sly = iry = ily = y
-
     count = 0
-    if len_m > rx:
-        while count_way(board, len_m, rx - 1, y):
-            rx = rx-1
-            count = count+1
-        while count_way(board, len_m, lx + 1, y):
-            lx = lx+1
-            count = count+1
-        while count_way(board, len_m, x, ry - 1):
-            ry = ry-1
-            count = count+1
-        while count_way(board, len_m, x, ly + 1):
-            ly = ly+1
-            count = count+1
-        while count_way(board, len_m, srx + 1, sry + 1):
-            srx = srx+1
-            sry = sry + 1
-            count = count+1
-        while count_way(board, len_m, slx - 1, sly - 1):
-            slx = slx - 1
-            sly = sly - 1
-            count = count+1
-        while count_way(board, len_m, irx + 1, iry - 1):
-            irx = irx + 1
-            iry = iry - 1
-            count = count+1
-        while count_way(board, len_m, ilx - 1, ily + 1):
-            ilx = ilx - 1
-            ily = ily + 1
-            count = count+1
-
+    movements = {"mov1": [-1, 0], "mov2": [0, -1], "mov3": [1, 0], "mov4": [0, 1], "mov5": [1, 1],
+                 "mov6": [-1, -1], "mov7": [1, -1], "mov8": [-1, 1]}
+    for values in movements.values():
+        count = count_way(board, len_m, x, y, values[0], values[1], count)
     print(count)
 
 
-def count_way(board, len_m, x, y):
-    if x < 0 or y < 0 or x > len_m-1 or y > len_m-1:
-        return False
-    if board[x][y] == 0:
-        return True
+def count_way(board, len_m, x, y, var_a, var_b, count):
+    x = x + var_a
+    y = y + var_b
+    if x < 0 or y < 0 or x > len_m - 1 or y > len_m - 1:
+        pass
     else:
-        return False
+        if board[x][y] == 0:
+            count = count + 1
+            count = count_way(board, len_m, x, y, var_a, var_b, count)
+
+    return count
+
 
 
 read_tex()
