@@ -1,141 +1,149 @@
 import os
 
-def readText():
+
+def read_tex():
     try:
         if os.stat('archivo.txt').st_atime > 0:
-            archivo = open('archivo.txt', 'r')
-            listLines = archivo.readlines()
-            archivo.close()
-            fulfill = cumple(listLines)
-            if fulfill['cumple']:
-                varFormat(fulfill['lista'])
+            file = open('archivo.txt', 'r')
+            list_lines = file.readlines()
+            file.close()
+            fulfill = validators(list_lines)
+            if fulfill['validators']:
+                var_format(fulfill['list'])
             else:
-                print(fulfill['mensaje_error'])
+                print(fulfill['error_message'])
         else:
-            print('El archivo esta vacio')
+            print('The file is empty')
     except Exception as e:
-        print('No se puede leer el archivo, por favor verifiquelo '+str(e))
+        print('can not read the file, pleace check it '+str(e))
 
-def cumple(listLines):
-    cumple = True
-    list = []
-    mensaje_error = ''
-    if len(listLines) >= 2:
-        for index, linea in enumerate(listLines):
+
+def validators(list_lines):
+    validator = True
+    list_validator = []
+    error_message = ''
+    if len(list_lines) >= 2:
+        for index, linea in enumerate(list_lines):
             line = linea.split()
             if len(line) == 2:
                 if int(line[0]) < 0 or int(line[1]) < 0:
-                    mensaje_error = 'Los numeros no deben ser negativos'
-                    cumple = False
+                    error_message = 'the numbers should not be negative'
+                    validator = False
                     break
                 else:
                     if index == 0:
-                        matrizT = int(line[0])
-                        if int(line[1]) != len(listLines) - 2:
-                            mensaje_error = 'La cantidad de obstaculos no concuerda'
-                            cumple = False
+                        matrix_t = int(line[0])
+                        if int(line[1]) != len(list_lines) - 2:
+                            error_message = 'the number of obstacles does not match'
+                            validator = False
                             break
-                    elif matrizT < int(line[0]) or matrizT < int(line[1]):
-                        mensaje_error = 'La posicion '+line[0]+', '+line[1]+' no se encuentra dentro de la matriz'
-                        cumple = False
+                    elif matrix_t < int(line[0]) or matrix_t < int(line[1]):
+                        error_message = 'The position '+line[0]+', '+line[1]+' it is not found inside the matrix'
+                        validator = False
                         break
             else:
-                mensaje_error = 'Debe ingregsar posiciones'
-                cumple = False
+                error_message = 'Must enter positions'
+                validator = False
                 break
-            list.append(line)
+            list_validator.append(line)
     else:
-        cumple = False
-        mensaje_error = 'Debe ingresar mas datos'
+        validator = False
+        error_message = 'You must enter more data'
 
-    return {'cumple': cumple, 'mensaje_error': mensaje_error, 'lista': list}
+    return {'validator': validator, 'error_message': error_message, 'list': list_validator}
 
-def varFormat(lista):
-    obst = {}
-    queenP =[]
-    for idxRow, row in enumerate(lista):
-        obstl = []
+
+def var_format(list_q):
+    obs = {}
+    queen_p = []
+    for idxRow, row in enumerate(list_q):
+        obs_tl = []
         if idxRow == 0:
-            lenM = int(row[0])
+            len_m = int(row[0])
         elif idxRow == 1:
-            queenP.append(int(row[0]))
-            queenP.append(int(row[1]))
+            queen_p.append(int(row[0]))
+            queen_p.append(int(row[1]))
         else:
-            obstl.append(int(row[0]))
-            obstl.append(int(row[1]))
-            obst[idxRow-2] = obstl
-    fillMatriz(lenM, queenP, obst)
+            obs_tl.append(int(row[0]))
+            obs_tl.append(int(row[1]))
+            obs[idxRow-2] = obs_tl
+    fill_matrix(len_m, queen_p, obs)
 
-def fillMatriz(lenM, queenP, obst):
-    board = crearMatriz(lenM)
-    putObstacules(board, obst)
-    solve(lenM, queenP, board)
 
-def crearMatriz(n):
-    chessboard = []
-    for i in range(n):
-        chessboard.append([0] * n)
+def fill_matrix(len_m, queen_p, obs):
+    board = new_matrix(len_m)
+    put_obstacles(board, obs)
+    solve(len_m, queen_p, board)
+
+
+def new_matrix(n):
+    chessboard = [[0 for y in range(n)] for x in range(n)]
     return chessboard
 
-def putObstacules(board, obst):
-    for i in obst:
-        board[obst[i][0] - 1][obst[i][1] - 1] = 2
 
-def printBoard(board):
+def put_obstacles(board, obs):
+    for i in obs:
+        board[obs[i][0] - 1][obs[i][1] - 1] = 2
+
+
+def print_board(board):
     for i in board:
         pass
         print(i)
 
-def solve(lenM, queenP, board):
-    x = queenP[0]-1
-    y = queenP[1]-1
-    board[x][y] = 1
-    findWay(board, lenM, x, y)
-    printBoard(board)
 
-def findWay(board, lenM, x, y):
+def solve(len_m, queen_p, board):
+    x = queen_p[0]-1
+    y = queen_p[1]-1
+    board[x][y] = 1
+    find_way(board, len_m, x, y)
+    print_board(board)
+
+
+def find_way(board, len_m, x, y):
     rx = lx = srx = slx = irx = ilx = x
     ry = ly = sry = sly = iry = ily = y
 
     count = 0
-    if lenM > rx:
-        while countWay(board, lenM, rx-1, y):
+    if len_m > rx:
+        while count_way(board, len_m, rx - 1, y):
             rx = rx-1
             count = count+1
-        while countWay(board, lenM, lx+1, y):
+        while count_way(board, len_m, lx + 1, y):
             lx = lx+1
             count = count+1
-        while countWay(board, lenM, x, ry-1):
+        while count_way(board, len_m, x, ry - 1):
             ry = ry-1
             count = count+1
-        while countWay(board, lenM, x, ly+1):
+        while count_way(board, len_m, x, ly + 1):
             ly = ly+1
             count = count+1
-        while countWay(board, lenM, srx+1, sry+1):
+        while count_way(board, len_m, srx + 1, sry + 1):
             srx = srx+1
             sry = sry + 1
             count = count+1
-        while countWay(board, lenM, slx-1, sly-1):
+        while count_way(board, len_m, slx - 1, sly - 1):
             slx = slx - 1
             sly = sly - 1
             count = count+1
-        while countWay(board, lenM, irx+1, iry-1):
+        while count_way(board, len_m, irx + 1, iry - 1):
             irx = irx + 1
             iry = iry - 1
             count = count+1
-        while countWay(board, lenM, ilx-1, ily+1):
+        while count_way(board, len_m, ilx - 1, ily + 1):
             ilx = ilx - 1
             ily = ily + 1
             count = count+1
 
     print(count)
 
-def countWay(board, lenM, x, y):
-    if x < 0 or y < 0 or x > lenM-1 or y > lenM-1:
+
+def count_way(board, len_m, x, y):
+    if x < 0 or y < 0 or x > len_m-1 or y > len_m-1:
         return False
     if board[x][y] == 0:
         return True
     else:
         return False
 
-readText()
+read_tex()
