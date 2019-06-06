@@ -1,7 +1,7 @@
 import os
 
 
-def read_text():
+def read_tex():
     try:
         if os.stat('archivo.txt').st_atime > 0:
             file = open('archivo.txt', 'r')
@@ -11,11 +11,11 @@ def read_text():
             if fulfill['validators']:
                 var_format(fulfill['list'])
             else:
-                print(fulfill['message_error'])
+                print(fulfill['error_message'])
         else:
-            print('El file esta vacio')
+            print('The file is empty')
     except Exception as e:
-        print('No se puede leer el file, por favor verifiquelo ' + str(e))
+        print('can not read the file, pleace check it '+str(e))
 
 
 def validators(list_lines):
@@ -27,30 +27,28 @@ def validators(list_lines):
             line = linea.split()
             if len(line) == 2:
                 if int(line[0]) < 0 or int(line[1]) < 0:
-                    error_message = 'Los numeros no deben ser negativos'
+                    error_message = 'the numbers should not be negative'
                     validator = False
                     break
                 else:
                     if index == 0:
                         matrix_t = int(line[0])
                         if int(line[1]) != len(list_lines) - 2:
-                            error_message = 'La cantidad de obstaculos no concuerda'
+                            error_message = 'the number of obstacles does not match'
                             validator = False
                             break
                     elif matrix_t < int(line[0]) or matrix_t < int(line[1]):
-                        error_message = 'La posicion ' + line[0] + ', ' + line[
-                            1] + ' no se encuentra dentro de la matriz'
+                        error_message = 'The position '+line[0]+', '+line[1]+' it is not found inside the matrix'
                         validator = False
                         break
             else:
-                error_message = 'Debe ingresar posiciones'
+                error_message = 'Must enter positions'
                 validator = False
                 break
             list_validator.append(line)
     else:
         validator = False
-        error_message = 'Debe ingresar mas datos'
-
+        error_message = 'You must enter more data'
     return {'validators': validator, 'error_message': error_message, 'list': list_validator}
 
 
@@ -67,7 +65,7 @@ def var_format(list_q):
         else:
             obs_tl.append(int(row[0]))
             obs_tl.append(int(row[1]))
-            obs[idxRow - 2] = obs_tl
+            obs[idxRow-2] = obs_tl
     fill_matrix(len_m, queen_p, obs)
 
 
@@ -94,8 +92,8 @@ def print_board(board):
 
 
 def solve(len_m, queen_p, board):
-    x = queen_p[0] - 1
-    y = queen_p[1] - 1
+    x = queen_p[0]-1
+    y = queen_p[1]-1
     board[x][y] = 1
     find_way(board, len_m, x, y)
     print_board(board)
@@ -123,4 +121,4 @@ def count_way(board, len_m, x, y, var_a, var_b, count):
     return count
 
 
-read_text()
+read_tex()
