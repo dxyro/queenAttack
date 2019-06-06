@@ -146,4 +146,5 @@ def count_way(board, len_m, x, y):
     else:
         return False
 
+
 read_tex()
