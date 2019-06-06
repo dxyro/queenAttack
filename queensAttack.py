@@ -68,17 +68,17 @@ def main():
         fillMatriz(lenM, queenP, obst)
 
     def fillMatriz(lenM, queenP, obst):
-        board = crearMatriz(lenM)
-        putObstacules(board, obst)
+        board = crear_matriz(lenM)
+        put_obstacules(board, obst)
         solve(lenM, queenP, board)
 
-    def crearMatriz(n):
+    def crear_matriz(n):
         chessboard = []
         for i in range(n):
             chessboard.append([0] * n)
         return chessboard
 
-    def putObstacules(board, obst):
+    def put_obstacules(board, obst):
         for i in obst:
             board[obst[i][0] - 1][obst[i][1] - 1] = 2
 
