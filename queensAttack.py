@@ -1,19 +1,6 @@
 import os
+from tabulate import tabulate
 
-<<<<<<< HEAD
-def main():
-    def readText():
-        try:
-            if os.stat("archivo.txt").st_atime > 0:
-                archivo = open("archivo.txt", 'r')
-                listLines = archivo.readlines()
-                archivo.close()
-                fulfill = cumple(listLines)
-                if fulfill['cumple']:
-                    varFormat(fulfill['lista'])
-                else:
-                    print(fulfill['mensaje_error'])
-=======
 
 def read_tex():
     try:
@@ -24,7 +11,6 @@ def read_tex():
             fulfill = validators(list_lines)
             if fulfill['validators']:
                 var_format(fulfill['list'])
->>>>>>> 28d3ed5a558b4a3f544f50b6b2705480f310baeb
             else:
                 print(fulfill['error_message'])
         else:
@@ -101,9 +87,7 @@ def put_obstacles(board, obs):
 
 
 def print_board(board):
-    for i in board:
-        pass
-        print(i)
+    print(tabulate(board, tablefmt='fancy_grid'))
 
 
 def solve(len_m, queen_p, board):
