@@ -50,7 +50,7 @@ def validators(list_lines):
         validator = False
         error_message = 'You must enter more data'
 
-    return {'validator': validator, 'error_message': error_message, 'list': list_validator}
+    return {'validators': validator, 'error_message': error_message, 'list': list_validator}
 
 
 def var_format(list_q):
