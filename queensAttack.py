@@ -49,7 +49,7 @@ def main():
             validator = False
             error_message = 'You must enter more data'
 
-        return {'validator': validator, 'error_message': error_message, 'list': list_validator}
+        return {'cumple': cumple, 'mensaje_error': mensaje_error, 'lista': list}
 
     def varFormat(lista):
         obst = {}
@@ -68,8 +68,8 @@ def main():
         fillMatriz(lenM, queenP, obst)
 
     def fillMatriz(lenM, queenP, obst):
-        board = crear_matriz(lenM)
-        put_obstacules(board, obst)
+        board = crearMatriz(lenM)
+        putObstacules(board, obst)
         solve(lenM, queenP, board)
 
     def crear_matriz(n):
@@ -91,10 +91,10 @@ def main():
         x = queenP[0]-1
         y = queenP[1]-1
         board[x][y] = 1
-        find_way(board, lenM, x, y)
-        print_board(board)
+        findWay(board, lenM, x, y)
+        printBoard(board)
 
-    def find_way(board, lenM, x, y):
+    def findWay(board, lenM, x, y):
         rx = lx = srx = slx = irx = ilx = x
         ry = ly = sry = sly = iry = ily = y
 
