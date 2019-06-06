@@ -4,52 +4,52 @@ def main():
     def readText():
         try:
             if os.stat('archivo.txt').st_atime > 0:
-                archivo = open('archivo.txt', 'r')
-                listLines = archivo.readlines()
-                archivo.close()
-                fulfill = cumple(listLines)
+                file = open('archivo.txt', 'r')
+                list_lines = file.readlines()
+                file.close()
+                fulfill = validator(list_lines)
                 if fulfill['cumple']:
                     varFormat(fulfill['lista'])
                 else:
-                    print(fulfill['mensaje_error'])
+                    print(fulfill['error_message'])
             else:
-                print('El archivo esta vacio')
+                print('The file is empty')
         except Exception as e:
-            print('No se puede leer el archivo, por favor verifiquelo '+str(e))
+            print('can not read the file, pleace check it '+str(e))
 
-    def cumple(listLines):
-        cumple = True
-        list = []
-        mensaje_error = ''
-        if len(listLines) >= 2:
-            for index, linea in enumerate(listLines):
+    def validator (list_lines):
+        validator = True
+        list_validator = []
+        error_message = ''
+        if len(list_lines) >= 2:
+            for index, linea in enumerate(list_lines):
                 line = linea.split()
                 if len(line) == 2:
                     if int(line[0]) < 0 or int(line[1]) < 0:
-                        mensaje_error = 'Los numeros no deben ser negativos'
-                        cumple = False
+                        error_message = 'the numbers should not be negative'
+                        validator = False
                         break
                     else:
                         if index == 0:
                             matrizT = int(line[0])
-                            if int(line[1]) != len(listLines) - 2:
-                                mensaje_error = 'La cantidad de obstaculos no concuerda'
-                                cumple = False
+                            if int(line[1]) != len(list_lines) - 2:
+                                error_message = 'the number of obstacles does not match'
+                                validator = False
                                 break
                         if matrizT < int(line[0]) or matrizT < int(line[1]):
-                            mensaje_error = 'La posicion '+line[0]+', '+line[1]+' no se encuentra dentro de la matriz'
-                            cumple = False
+                            error_message = 'The position'+line[0]+', '+line[1]+' it is not found inside the matrix'
+                            validator = False
                             break
                 else:
-                    mensaje_error = 'Debe ingregsar posiciones'
-                    cumple = False
+                    error_message = 'Must enter positions'
+                    validator = False
                     break
-                list.append(line)
+                list_validator.append(line)
         else:
-            cumple = False
-            mensaje_error = 'Debe ingresar mas datos'
+            validator = False
+            error_message = 'You must enter more data'
 
-        return {'cumple': cumple, 'mensaje_error': mensaje_error, 'lista': list}
+        return {'validator': validator, 'error_message': error_message, 'list': list_validator}
 
     def varFormat(lista):
         obst = {}
@@ -82,7 +82,7 @@ def main():
         for i in obst:
             board[obst[i][0] - 1][obst[i][1] - 1] = 2
 
-    def printBoard(board):
+    def print_board(board):
         for i in board:
             pass
             print(i)
@@ -91,10 +91,10 @@ def main():
         x = queenP[0]-1
         y = queenP[1]-1
         board[x][y] = 1
-        findWay(board, lenM, x, y)
-        printBoard(board)
+        find_way(board, lenM, x, y)
+        print_board(board)
 
-    def findWay(board, lenM, x, y):
+    def find_way(board, lenM, x, y):
         rx = lx = srx = slx = irx = ilx = x
         ry = ly = sry = sly = iry = ily = y
 
