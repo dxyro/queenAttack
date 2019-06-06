@@ -1,4 +1,5 @@
 import os
+from tabulate import tabulate
 
 
 def read_tex():
@@ -86,9 +87,7 @@ def put_obstacles(board, obs):
 
 
 def print_board(board):
-    for i in board:
-        pass
-        print(i)
+    print(tabulate(board, tablefmt='fancy_grid'))
 
 
 def solve(len_m, queen_p, board):
